@@ -65,22 +65,14 @@ public class Cliente {
 		System.out.print("Introduzca su numero de telefono: ");
 		String telefono = Principal.stringScaner();
 		
-		for (Cliente clienteNom : listaCliente) {
+		for (Cliente clienteIS : listaCliente) {
 			
-			if(clienteNom.getNombre().equalsIgnoreCase(nombre)) {
+			if(clienteIS.getNombre().equalsIgnoreCase(nombre) && clienteIS.getTelefono().equals(telefono)) {
 				
-				for (Cliente clienteTelef : listaCliente) {
+				c = clienteIS;
 					
-					if (clienteTelef.getTelefono().equals(telefono)) {
-						
-						c = clienteTelef;
-						
-					}
-					
-				}
-				
 			}
-			
+		
 		}
 		
 		if (c==null) {

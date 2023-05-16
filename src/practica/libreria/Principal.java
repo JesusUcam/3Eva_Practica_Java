@@ -3,63 +3,6 @@ package practica.libreria;
 import java.util.Scanner;
 
 public class Principal {
-	
-	//Falta hacer bien el formato del toString
-
-	public static void main(String[] args) {
-		
-		insertarDatos();
-		
-		final String menu = 
-				"1. mostrar datos de los productos"
-				+ "\n2. comprar productos"
-				+ "\n3. mostrar lista compra"
-				+ "\n4. pagar" //Se cobra todo al cliente, se limpia la cesta y se le imprime un ticket
-				+ "\n5. Salir";
-		
-		boolean key = false;
-		while (!key) {
-			
-			System.out.println(menu);
-			
-			int menuOpcion = excepcionInt();
-			switch (menuOpcion) {
-			case 1:
-				
-				Producto.lectorProductos();
-				
-				break;
-			case 2:
-				
-				Producto.comprarProductos(Cliente.iniciarSesion());
-	
-				break;
-			case 3:
-				
-				Cliente.mostrarCesta(Cliente.iniciarSesion());
-	
-				break;
-			case 4:
-				
-				Cliente.pagoCesta(Cliente.iniciarSesion());
-				
-				break;
-			case 5:
-				
-				key = true;
-				System.out.println("Que tenga un buen dia");
-				
-				break;
-			default:
-				
-				System.out.println("Opción no válida, escoja una de las opciones del menu");
-				
-				break;
-			}
-			
-		}
-		
-	}
 
 	//meter aqui los datos de prueba en otro metodo y crear un escaner con control de errores para el menu
 	public static void insertarDatos() {
@@ -148,4 +91,62 @@ public class Principal {
 		return texto;
 		
 	}
+	
+	//Falta hacer bien el formato del toString
+
+	public static void main(String[] args) {
+		
+		insertarDatos();
+		
+		final String menu = 
+				"1. mostrar datos de los productos"
+				+ "\n2. comprar productos"
+				+ "\n3. mostrar lista compra"
+				+ "\n4. pagar" //Se cobra todo al cliente, se limpia la cesta y se le imprime un ticket
+				+ "\n5. Salir";
+		
+		boolean key = false;
+		while (!key) {
+			
+			System.out.println(menu);
+			
+			int menuOpcion = excepcionInt();
+			switch (menuOpcion) {
+			case 1:
+				
+				Producto.lectorProductos();
+				
+				break;
+			case 2:
+				
+				Producto.comprarProductos(Cliente.iniciarSesion());
+	
+				break;
+			case 3:
+				
+				Cliente.mostrarCesta(Cliente.iniciarSesion());
+	
+				break;
+			case 4:
+				
+				Cliente.pagoCesta(Cliente.iniciarSesion());
+				
+				break;
+			case 5:
+				
+				key = true;
+				System.out.println("Que tenga un buen dia");
+				
+				break;
+			default:
+				
+				System.out.println("Opción no válida, escoja una de las opciones del menu");
+				
+				break;
+			}
+			
+		}
+		
+	}
+
 }

@@ -77,6 +77,25 @@ public class Producto {
 		
 	}
 	
+	public static Producto buscadorProductos(String codigoP) {
+		
+		Producto p = null;
+		
+		for (Producto producto : Producto.getListaProductos()) {
+			
+			if (producto.codigo.equalsIgnoreCase(codigoP)){
+				
+				p = producto;
+				
+			}
+			
+			System.out.println(producto.codigo);
+		}
+		
+		return p;
+		
+	}
+	
 	public static void comprarProductos(Cliente c) {
 
 		System.out.println("Introduzca el código del producto que desea comprar. Cuando desee dejar de comprar escriba \"0\""); //Falta que tenga en cuenta el stock
@@ -119,11 +138,7 @@ public class Producto {
 				}
 				
 			}
-			
-			if(codProducto=="manin"){
-
-				System.out.println("Me detecta");
-			}
+		
 		}
 		
 	}

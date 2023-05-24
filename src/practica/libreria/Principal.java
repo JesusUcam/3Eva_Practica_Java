@@ -24,7 +24,7 @@ public class Principal {
 		Producto.getListaProductos().add(carpeta1);
 
 		//ESTUCHE: codigo, nombre, descripcion, precioUnidad, stock, tipo, numDeColores
-		Estuche estuche1 = new Estuche("5", "Estuche humildad", "Estuche low cost", 1, 20, "pequeño", 1);
+		Estuche estuche1 = new Estuche("5", "Estuche", "Estuche low cost", 1, 20, "pequeño", 1);
 		Estuche estuche2 = new Estuche("6", "Estuche pro", "Estuche de alta calidad para profesionales", 89.99, 0, "pro", 5);
 		Producto.getListaProductos().add(estuche1);
 		Producto.getListaProductos().add(estuche2);
@@ -52,6 +52,9 @@ public class Principal {
 		c3.getCesta().add(boligrafo2);
 		c2.getCesta().add(libro2);
 		c2.getCesta().add(libro1);
+		
+		//IMPORTANTE BORRAR ESTO CUANDO ENTREGE EL CODIGO
+		Cliente.c = c3;
 		
 	}
 

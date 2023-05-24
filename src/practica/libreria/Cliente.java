@@ -1,7 +1,18 @@
 package practica.libreria;
 
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Cliente {
 	
@@ -12,6 +23,8 @@ public class Cliente {
 	private ArrayList<Producto> cesta;
 	
 	private static ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
+	public static Cliente c = null;
+	
 	
 	//Getters n Setters
 	public String getNombre() {
@@ -57,34 +70,98 @@ public class Cliente {
 	//Metodos
 	public static Cliente iniciarSesion() {
 		
-		Cliente c = null;
+		JFrame jfInicioSesion = new JFrame();
+		JPanel jpInicioSesion = new JPanel();
 		
-		System.out.print("Introduzca su nombre: ");
-		String nombre = Principal.stringScaner();
+		jpInicioSesion.setBackground(new Color(210, 210, 255));
+		jpInicioSesion.setLayout(null);
 		
-		System.out.print("Introduzca su numero de telefono: ");
-		String telefono = Principal.stringScaner();
+		//Ventana
+		jfInicioSesion.setSize(200, 200);
+		jfInicioSesion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		jfInicioSesion.setLocationRelativeTo(null);
+		jfInicioSesion.setLayout(null);
 		
-		for (Cliente clienteIS : listaCliente) {
-			
-			if(clienteIS.getNombre().equalsIgnoreCase(nombre) && clienteIS.getTelefono().equals(telefono)) {
+		JLabel jlNombre = new JLabel("Introduzca su nombre:");
+		JLabel jlTelefono = new JLabel("Introduzca su telefono:");
+		JTextField jtfNombre = new JTextField();
+		JTextField jtfTelefono = new JTextField();
+		JButton jbVerificar = new JButton("Verificar");
+		
+		jpInicioSesion.add(jlNombre);
+		jpInicioSesion.add(jlTelefono);
+		jpInicioSesion.add(jtfNombre);
+		jpInicioSesion.add(jtfTelefono);
+		jpInicioSesion.add(jbVerificar);
+		
+		//Coordenadas
+		jlNombre.setBounds(25,10,130,25);
+		jtfNombre.setBounds(25,35,130,25);
+		jlTelefono.setBounds(25,60,130,25);
+		jtfTelefono.setBounds(25,85,130,25);
+		jbVerificar.setBounds(25,120,100,30);
+		
+		jfInicioSesion.setContentPane(jpInicioSesion);
+		jfInicioSesion.setVisible(true);
+		
+		
+		
+		jbVerificar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
 				
-				c = clienteIS;
+				
+				
+				if (jtfNombre.getText().isEmpty()||jtfTelefono.getText().isEmpty()) {
 					
+					JOptionPane.showMessageDialog(null, "ERROR. No puedes dejar campos en blanco.\nRellena todos los campos y dale a enviar", null,	JOptionPane.ERROR_MESSAGE);
+					
+				} else {
+					
+					String nombre = jtfNombre.getText();
+					String telefono = jtfTelefono.getText();
+					
+					for (Cliente clienteIS : listaCliente) {
+			
+						if(clienteIS.getNombre().equalsIgnoreCase(nombre) && clienteIS.getTelefono().equals(telefono)) {
+							
+							c = clienteIS;
+								
+						}
+					
+					}
+					
+					if (c == null) {
+						
+						int nuevoCliente = JOptionPane.showConfirmDialog(null, "Los datos introducidos no corresponden con ninguno de nuestros clientes \n¿Desea registrarse?", "Crear usuario", JOptionPane.YES_NO_OPTION);
+						if (nuevoCliente == JOptionPane.YES_OPTION) {
+							
+							c = new Cliente(nombre, telefono);
+							listaCliente.add(c);
+					
+							System.out.println(c.getNombre());
+							
+						    JOptionPane.showMessageDialog(null, "¡Cliente registrado! disfrute sus compras");
+						    
+						    //Ventana.cambioIniciarCerrarSesion();
+						    
+						    jfInicioSesion.dispose();
+						    
+						} //else { JOptionPane.showMessageDialog(null, "Operacion cancelada");}
+						
+					} else {
+						
+						JOptionPane.showMessageDialog(null, "Bienvenid@ "+c.getNombre()+", esperamos que encuentre lo que busca");
+						jfInicioSesion.dispose();
+						
+					}
+				}
+				
 			}
+		});
 		
-		}
 		
-		if (c==null) {
-			
-			c = new Cliente(nombre, telefono);
-			getListaCliente().add(c);
-			
-			System.out.println("¡Sus datos han sido registrados correctamente! Ya puede comprar en nuestra libreria");
-			
-		}
-		
-		return c;
+		return c; //no hace falta
 		
 	}
 	

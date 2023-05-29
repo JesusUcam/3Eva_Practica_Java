@@ -9,6 +9,7 @@ public class Producto {
 	private String descripcion;
 	private double precioUnidad;
 	private int stock;
+	private String rutaImagen;
 	
 	private static ArrayList<Producto> listaProductos = new ArrayList<Producto>();
 	
@@ -49,7 +50,12 @@ public class Producto {
 	public static void setListaProductos(ArrayList<Producto> listaProductos) {
 		Producto.listaProductos = listaProductos;
 	}
-	
+	public String getRutaImagen() {
+		return rutaImagen;
+	}
+	public void setRutaImagen(String rutaImagen) {
+		this.rutaImagen = rutaImagen;
+	}
 	//Constructores
 	public Producto(String codigo, String nombre, String descripcion, double precio_unidad, int stock) {
 		
@@ -58,6 +64,17 @@ public class Producto {
 		this.descripcion = descripcion;
 		this.precioUnidad = precio_unidad;
 		this.stock = stock;
+		this.rutaImagen = "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\sin_imagen.png";
+
+	}
+	public Producto(String codigo, String nombre, String descripcion, double precio_unidad, int stock, String rutaImagen) {
+		
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precioUnidad = precio_unidad;
+		this.stock = stock;
+		this.rutaImagen = rutaImagen;
 		
 	}
 	@Override

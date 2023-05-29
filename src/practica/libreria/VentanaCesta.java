@@ -1,6 +1,7 @@
 package practica.libreria;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -11,61 +12,101 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class VentanaCesta extends JFrame implements ActionListener{
 
 	private int contPP=0;
 	private double total = 0;
 	
-	private JPanel jp;
+	private JPanel jp, jpScroll;
+	
+	private JScrollPane jsp;
+	
 	private JButton comprar;
 	
 	public VentanaCesta() {
-		Cliente c = Cliente.c;
-		jp = new JPanel();
-		jp.setBackground(new Color(215, 215, 250));
 		
-		add(jp);
+		Cliente c = Cliente.c;
+		
 		setSize(640, 360);
+		
+		//Añado el panel para los productos
+		jp = new JPanel();
+		jp.setBackground(new Color(215, 215, 250) );
+		add(jp);
 		setContentPane(jp);
-		setLayout(null);
+		
+		jpScroll = new JPanel();
+		jpScroll.setLayout(null);
+		
+		add(jpScroll);
+		
+		jsp = new JScrollPane(jpScroll);
+		
+		if (contPP<10) {
+		
+			jsp.setBounds(20,20,350,contPP*25);
+			
+		}else {
+			
+			jsp.setBounds(20,20,350,250);
+			
+		}
+		add(jsp);
 		
 		comprar = new JButton("Comprar todo");
 		add(comprar);
 		
 		comprar.setBounds(450,50,150,50);
 		
-		pintarProductosCesta(c);
+		pintarProductosCesta();
+		
+		if (contPP<10) {
+		
+			jsp.setBounds(20,20,350,(contPP*25)+3);
+			
+		}else {
+			
+			jsp.setBounds(20,20,365,250);
+			
+		}
+		
+		comprar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				int nuevoCliente = JOptionPane.showConfirmDialog(null, "Esta a punto de hacer un pago de "+String.format("%.2f", total)+"€, ¿Desea continuar?", "Realizar pago", JOptionPane.YES_NO_OPTION);
+				if (nuevoCliente == JOptionPane.YES_OPTION) {
+					c.getCesta().clear();
+					JOptionPane.showMessageDialog(null, "Gracias por su compra");
+					dispose();
+				}
+			}
+		});
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setLayout(null);
 		setVisible(true);
 		
 	}
 	
-	public void pintarProductosCesta(Cliente c) {
+	public void pintarProductosCesta() {
 		
-		for (Producto cesta : c.getCesta()) {
+		for (Producto cesta : Cliente.c.getCesta()) {
 		
 			JButton jbProducto = crearProductosCesta(cesta);
 			total += cesta.getPrecioUnidad();
 			
 		}
-		
-		if (total==0) {
-			
-			//JLabel
-			JOptionPane.showMessageDialog(null, "Todavía no cuenta con ningún producto en su cesta. Puede agregar productos en la cesta");
-			
-		} else {
-			
-			JLabel jlTotal = new JLabel(String.format("%.2f", total)+"€");
-			add(jlTotal);
-			jlTotal.setBounds(300,200,120,30);
-			
-		}
-		
 
+		jpScroll.setPreferredSize(new Dimension(0,contPP*25));
+		
+		JLabel jlTotal = new JLabel(String.format("%.2f", total)+"€");
+		add(jlTotal);
+		jlTotal.setBounds(300,200,120,30);
+	
 	}
 	
 	public JButton crearProductosCesta(Producto p) {
@@ -73,68 +114,27 @@ public class VentanaCesta extends JFrame implements ActionListener{
 		/*
 		 * 640x360
 		 */
-	
-		int x = 20;
-		int y = 20 + (25*contPP); 
+		
+		int y = 0 + (25*contPP); 
 				
 		JButton jbProducto = new JButton(p.getNombre());
 		JButton jbEliminar = new JButton("Eliminar");
-		add(jbProducto);
-		add(jbEliminar);
+		jpScroll.add(jbProducto);
+		jpScroll.add(jbEliminar);
 		
-		jbProducto.setBounds(x,y,250,25);
-		jbEliminar.setBounds((x+250),y,100,25);
+		jbProducto.setBounds(0,y,250,25);
+		jbEliminar.setBounds((250),y,100,25);
 		
 		contPP++;
 		
 		jbProducto.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+		
+				VentanaProducto vp = new VentanaProducto(p);
 				
-				JFrame ventanaDeProducto = new JFrame(p.getNombre());
-				JPanel panelVP = new JPanel();
-				
-				panelVP.setBackground(new Color(210, 210, 255));
-				panelVP.setLayout(null);
-				
-				//Ventana
-				ventanaDeProducto.setSize(640, 360);
-				ventanaDeProducto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		        ventanaDeProducto.setLocationRelativeTo(null);
-				ventanaDeProducto.setLayout(null);
-				//Componentes
-				JLabel pDescripcion = new JLabel(p.getDescripcion());
-				JLabel pImagen = new JLabel();
-				JButton pComprar = new JButton("Comprar");
-				JComboBox<Integer> pUnidades = new JComboBox<Integer>();
-				
-				panelVP.add(pDescripcion);
-				panelVP.add(pComprar);
-				panelVP.add(pUnidades);
-				
-				//JComboBox
-				for (Integer i = 0; i<p.getStock(); i++) {
-					pUnidades.addItem(i);
-				}
-				//JButton
-				pComprar.addActionListener(new ActionListener() {
-
-					public void actionPerformed(ActionEvent e) {
-
-						
-						
-					}
-					
-				});
-				
-				//Coordenadas (640x360. 300x para la foto)
-				pUnidades.setBounds(270,180,100,25);
-				pComprar.setBounds(370,180,25,25);
-				pDescripcion.setBounds(30,210,300,25);
-		        
-				ventanaDeProducto.setContentPane(panelVP);
-				ventanaDeProducto.setVisible(true);
 			}
+		
 		});
 		
 		jbEliminar.addActionListener(new ActionListener() {
@@ -142,9 +142,8 @@ public class VentanaCesta extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				
 				Cliente.c.getCesta().remove(p);
-		
-				jp.remove(jbProducto);
-				
+				p.setStock(p.getStock()+1);
+				jsp.remove(jbProducto);
 				dispose();
 				
 				if (Cliente.c.getCesta().size()>0) {

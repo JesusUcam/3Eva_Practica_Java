@@ -121,6 +121,8 @@ public class Cliente {
 					String nombre = jtfNombre.getText();
 					String telefono = jtfTelefono.getText();
 					
+					c=null;
+					
 					for (Cliente clienteIS : listaCliente) {
 			
 						if(clienteIS.getNombre().equalsIgnoreCase(nombre) && clienteIS.getTelefono().equals(telefono)) {
@@ -146,6 +148,7 @@ public class Cliente {
 						    //Ventana.cambioIniciarCerrarSesion();
 						    
 						    jfInicioSesion.dispose();
+						    Ventana.activarCerrarSesion();
 						    
 						} //else { JOptionPane.showMessageDialog(null, "Operacion cancelada");}
 						
@@ -153,6 +156,7 @@ public class Cliente {
 						
 						JOptionPane.showMessageDialog(null, "Bienvenid@ "+c.getNombre()+", esperamos que encuentre lo que busca");
 						jfInicioSesion.dispose();
+						Ventana.activarCerrarSesion();
 						
 					}
 				}

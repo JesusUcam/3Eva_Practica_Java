@@ -82,7 +82,9 @@ public class VentanaCesta extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(null, "Gracias por su compra");
 					dispose();
 				}
+		
 			}
+		
 		});
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

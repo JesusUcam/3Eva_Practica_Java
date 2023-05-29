@@ -18,43 +18,60 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 //DUDAS REVISION: 
 	//1 - en pintarProductosCesta() de VentanaCesta, cuando total==0, como evito que salga la ventana de la cesta?
 
 public class Ventana extends JFrame implements ActionListener{
-
-	public static Class<?> clase = null;
-	private JPanel jpPrincipal;
 	
+	private JPanel jpPrincipal, jpMenu;
+	private JScrollPane jsp;
+	private String text;
 	private int contPP = 0;
-	
-	//Espero que esto esté bien, no había otra opción
+
 	private static JButton iniciarSesion, cerrarSesion, agregarCesta;
 
 	public Ventana() {
-		
-		//Panel
-		jpPrincipal = new JPanel();
-		jpPrincipal.setBackground(new Color(230, 230, 250));
-		add(jpPrincipal);
-		setContentPane(jpPrincipal);
-		setLayout(null);
 		
 		//Tamaño ventana:
 			//Voy a dividir la ventana en "trozos". Los primeros 320 px de X serán para el menú
 		setSize(1280, 720);
 		setResizable(false);
 		
+		//Paneles
+		jpPrincipal = new JPanel();
+		jpPrincipal.setBackground(new Color(230, 230, 250));
+		jpPrincipal.setPreferredSize(new Dimension(620,420)); //Lo que va a ocupar el panel realmente
+		//jpPrincipal.setBounds(340, 180, 640, 540);
+		jpMenu = new JPanel();
+		jpMenu.setBounds(0,180,320,790);
+		
+		add(jpPrincipal);
+		add(jpMenu);
+		
+		//JScrollPane
+		jsp = new JScrollPane(jpPrincipal);
+		
+		jsp.setBounds(340, 180, 640, 440); //El espacio que ocupa el panel dentro del frame
+		
+		add(jsp);
+		
+		setLayout(null);
+		jpPrincipal.setLayout(null);
+		jpMenu.setLayout(null);
+		
+		encabezado();
 		crearTiendaPrincipal();
 		
 		//JLabel - Los nombre serán "p" de producto + Nombre del producto. MEJORABLE
-		JLabel pProductos = crearJLabelMouseListener("Productos", 150);
-		JLabel pEstuche = crearJLabelMouseListener("Estuches", 200);
-		JLabel pLibro = crearJLabelMouseListener("Libros", 250);
-		JLabel pLibreta = crearJLabelMouseListener("Libretas", 300);
-		JLabel pBoligrafo = crearJLabelMouseListener("Boligrafos", 350);
-		JLabel pCarpeta = crearJLabelMouseListener("Carpetas", 400);
+		crearJLabelMouseListenerProductos("Productos", 0);
+		crearJLabelMouseListenerEstuche("Estuches", 50);
+		crearJLabelMouseListenerLibro("Libros", 100);
+		crearJLabelMouseListenerLibreta("Libretas", 150);
+		crearJLabelMouseListenerBoligrafo("Boligrafos", 200);
+		crearJLabelMouseListenerCarpeta("Carpetas", 250);
 		
 		//JButton
 		iniciarSesion = new JButton("Iniciar Sesion");
@@ -94,7 +111,6 @@ public class Ventana extends JFrame implements ActionListener{
 			}
 		
 		});
-		
 		cerrarSesion.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -108,7 +124,6 @@ public class Ventana extends JFrame implements ActionListener{
 			}
 
 		});
-		
 		agregarCesta.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -134,28 +149,18 @@ public class Ventana extends JFrame implements ActionListener{
 			
 		});
 		
+		jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180)); //Lo que va a ocupar el panel realmente
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		
-	}
-	
-	public static void activarCerrarSesion() {
-		
-		agregarCesta.setVisible(true);
-		cerrarSesion.setVisible(true);
-		iniciarSesion.setVisible(false);
-		
-	}
-	
 	public JLabel crearJLabelMouseListener(String texto, int y) {
 	    	
 		JLabel jl = new JLabel(texto);
-	    add(jl);
+	    jpMenu.add(jl);
 	    Font fuente = new Font("Arial", Font.PLAIN, 18);
 	    jl.setFont(fuente);
 	    jl.setForeground(Color.BLUE);
@@ -183,6 +188,110 @@ public class Ventana extends JFrame implements ActionListener{
 	        public void mouseClicked(MouseEvent e) {
 	        
 	        	for (Producto producto : Producto.getListaProductos()) {
+	        		
+	        		crearJButtonProductos(producto);
+	                
+	            }
+	        }
+	    });
+	        
+	    return jl;
+	        
+	}
+	
+	public void encabezado() {
+		
+		JLabel lTexto = new JLabel("Librería Aljesus");
+		lTexto.setFont(new Font("Old English Text MT", Font.BOLD, 40));
+		lTexto.setBounds(100, 20, 450, 45);
+		
+		JTextField busqueda = new JTextField();
+		busqueda.setBounds(420, 20, 450, 45);
+		text = busqueda.getText();
+		
+		
+		JButton buscador = new JButton();
+		buscador.setBounds(868,20,44,44);
+		buscador.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String text = buscador.getText().toLowerCase();
+				
+				for (Producto p : Producto.getListaProductos()) {
+					
+					if(!p.getNombre().toLowerCase().startsWith(text)) {
+						
+						System.out.println("No existe ese elemento");					
+							
+						
+					}else {
+						Producto.getListaProductos().add(p);
+						System.out.println("Nombre: "+p.getNombre());
+					}
+					
+					
+				}
+					
+			}
+				
+			
+		});
+		
+		
+		add(lTexto);
+		add(buscador);
+		add(busqueda);
+		
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+	
+	public static void activarCerrarSesion() {
+		
+		agregarCesta.setVisible(true);
+		cerrarSesion.setVisible(true);
+		iniciarSesion.setVisible(false);
+		
+	}
+	
+	public void crearJLabelMouseListenerLibro(String texto, int y) {
+	    
+		JLabel jl = new JLabel(texto);
+		jpMenu.add(jl);
+	    Font fuente = new Font("Arial", Font.PLAIN, 18);
+	    jl.setFont(fuente);
+	    jl.setForeground(Color.BLUE);
+	    
+	    Dimension dimensiones = jl.getPreferredSize();
+	    int ancho = dimensiones.width;
+	    int alto = dimensiones.height;
+	    jl.setBounds(20, y, ancho, alto);
+	    
+	    jl.addMouseListener(new MouseListener() {
+	    	
+	    	public void mouseReleased(MouseEvent e) {}
+	    	public void mousePressed(MouseEvent e) {}
+	    	public void mouseExited(MouseEvent e) {
+	    	
+	    		jl.setForeground(Color.BLUE);
+	            
+	            }
+	            
+	    	public void mouseEntered(MouseEvent e) {
+	        
+	        	jl.setForeground(new Color(128, 0, 255));
+	        
+	        }
+	        public void mouseClicked(MouseEvent e) {
+	        	
+	        	contPP = 0;
+	        	jpPrincipal.removeAll();
+	        	
+	        	for (Producto producto : Producto.getListaProductos()) {
 	            
 	        		if (producto instanceof Libro) {
 	                
@@ -193,7 +302,245 @@ public class Ventana extends JFrame implements ActionListener{
 	        }
 	    });
 	        
-	    return jl;
+	}
+	
+	public void crearJLabelMouseListenerProductos(String texto, int y) {
+    	
+		JLabel jl = new JLabel(texto);
+		jpMenu.add(jl);
+	    Font fuente = new Font("Arial", Font.PLAIN, 18);
+	    jl.setFont(fuente);
+	    jl.setForeground(Color.BLUE);
+	    
+	    Dimension dimensiones = jl.getPreferredSize();
+	    int ancho = dimensiones.width;
+	    int alto = dimensiones.height;
+	    jl.setBounds(20, y, ancho, alto);
+	    
+	    jl.addMouseListener(new MouseListener() {
+	    	
+	    	public void mouseReleased(MouseEvent e) {}
+	    	public void mousePressed(MouseEvent e) {}
+	    	public void mouseExited(MouseEvent e) {
+	    	
+	    		jl.setForeground(Color.BLUE);
+	            
+	            }
+	            
+	    	public void mouseEntered(MouseEvent e) {
+	        
+	        	jl.setForeground(new Color(128, 0, 255));
+	        
+	        }
+	        public void mouseClicked(MouseEvent e) {
+
+	        	contPP = 0;
+	        	jpPrincipal.removeAll();
+	        	
+	        	for (Producto producto : Producto.getListaProductos()) {
+	            
+	        		if (producto instanceof Producto) {
+	                
+	        			crearJButtonProductos(producto);
+	                
+	        		}
+	            }
+	        }
+	    });
+	        
+	}
+	
+	public void crearJLabelMouseListenerEstuche(String texto, int y) {
+    	
+		JLabel jl = new JLabel(texto);
+	    jpMenu.add(jl);
+	    Font fuente = new Font("Arial", Font.PLAIN, 18);
+	    jl.setFont(fuente);
+	    jl.setForeground(Color.BLUE);
+	    
+	    Dimension dimensiones = jl.getPreferredSize();
+	    int ancho = dimensiones.width;
+	    int alto = dimensiones.height;
+	    jl.setBounds(20, y, ancho, alto);
+	    
+	    jl.addMouseListener(new MouseListener() {
+	    	
+	    	public void mouseReleased(MouseEvent e) {}
+	    	public void mousePressed(MouseEvent e) {}
+	    	public void mouseExited(MouseEvent e) {
+	    	
+	    		jl.setForeground(Color.BLUE);
+	            
+	            }
+	            
+	    	public void mouseEntered(MouseEvent e) {
+	        
+	        	jl.setForeground(new Color(128, 0, 255));
+	        
+	        }
+	        public void mouseClicked(MouseEvent e) {
+	        	
+	        	contPP = 0;
+	        	jpPrincipal.removeAll();
+	        	
+	        	for (Producto producto : Producto.getListaProductos()) {
+	            
+	        		if (producto instanceof Estuche) {
+	                
+	        			crearJButtonProductos(producto);
+	                
+	        		}
+	            }
+	        	
+	        	jpPrincipal.repaint();
+	        	
+	        }
+	    });
+	        
+	}
+	
+	public void crearJLabelMouseListenerCarpeta(String texto, int y) {
+    	
+		JLabel jl = new JLabel(texto);
+		jpMenu.add(jl);
+	    Font fuente = new Font("Arial", Font.PLAIN, 18);
+	    jl.setFont(fuente);
+	    jl.setForeground(Color.BLUE);
+	    
+	    Dimension dimensiones = jl.getPreferredSize();
+	    int ancho = dimensiones.width;
+	    int alto = dimensiones.height;
+	    jl.setBounds(20, y, ancho, alto);
+	    
+	    jl.addMouseListener(new MouseListener() {
+	    	
+	    	public void mouseReleased(MouseEvent e) {}
+	    	public void mousePressed(MouseEvent e) {}
+	    	public void mouseExited(MouseEvent e) {
+	    	
+	    		jl.setForeground(Color.BLUE);
+	            
+	            }
+	            
+	    	public void mouseEntered(MouseEvent e) {
+	        
+	        	jl.setForeground(new Color(128, 0, 255));
+	        
+	        }
+	        public void mouseClicked(MouseEvent e) {
+	        	
+	        	contPP = 0;
+	        	jpPrincipal.removeAll();
+	        	
+	        	for (Producto producto : Producto.getListaProductos()) {
+	            
+	        		if (producto instanceof Carpeta) {
+	                
+	        			crearJButtonProductos(producto);
+	                
+	        		}
+	            }
+	        	
+	        	jpPrincipal.repaint();
+	        	
+	        }
+	    });
+	        
+	}
+	
+	public void crearJLabelMouseListenerLibreta(String texto, int y) {
+    	
+		JLabel jl = new JLabel(texto);
+		jpMenu.add(jl);
+	    Font fuente = new Font("Arial", Font.PLAIN, 18);
+	    jl.setFont(fuente);
+	    jl.setForeground(Color.BLUE);
+	    
+	    Dimension dimensiones = jl.getPreferredSize();
+	    int ancho = dimensiones.width;
+	    int alto = dimensiones.height;
+	    jl.setBounds(20, y, ancho, alto);
+	    
+	    jl.addMouseListener(new MouseListener() {
+	    	
+	    	public void mouseReleased(MouseEvent e) {}
+	    	public void mousePressed(MouseEvent e) {}
+	    	public void mouseExited(MouseEvent e) {
+	    	
+	    		jl.setForeground(Color.BLUE);
+	            
+	            }
+	            
+	    	public void mouseEntered(MouseEvent e) {
+	        
+	        	jl.setForeground(new Color(128, 0, 255));
+	        
+	        }
+	        public void mouseClicked(MouseEvent e) {
+	        	
+	        	contPP = 0;
+	        	jpPrincipal.removeAll();
+	        	
+	        	for (Producto producto : Producto.getListaProductos()) {
+	            
+	        		if (producto instanceof Libreta) {
+	                
+	        			crearJButtonProductos(producto);
+	                
+	        		}
+	            }
+	        	
+	        	jpPrincipal.repaint();
+	        	
+	        }
+	    });
+	        
+	}
+	
+	public void crearJLabelMouseListenerBoligrafo(String texto, int y) {
+    	
+		JLabel jl = new JLabel(texto);
+		jpMenu.add(jl);
+	    Font fuente = new Font("Arial", Font.PLAIN, 18);
+	    jl.setFont(fuente);
+	    jl.setForeground(Color.BLUE);
+	    
+	    Dimension dimensiones = jl.getPreferredSize();
+	    int ancho = dimensiones.width;
+	    int alto = dimensiones.height;
+	    jl.setBounds(20, y, ancho, alto);
+	    
+	    jl.addMouseListener(new MouseListener() {
+	    	
+	    	public void mouseReleased(MouseEvent e) {}
+	    	public void mousePressed(MouseEvent e) {}
+	    	public void mouseExited(MouseEvent e) {
+	    	
+	    		jl.setForeground(Color.BLUE);
+	            
+	            }
+	            
+	    	public void mouseEntered(MouseEvent e) {
+	        
+	        	jl.setForeground(new Color(128, 0, 255));
+	        
+	        }
+	        public void mouseClicked(MouseEvent e) {
+	        	
+	        	contPP = 0;
+	        	jpPrincipal.removeAll();
+	        	
+	        	for (Producto producto : Producto.getListaProductos()) {
+	            
+	        		if (producto instanceof Boligrafo) {
+	                
+	        			crearJButtonProductos(producto);
+	                
+	        		}
+	            }
+	        	
+	        }
+	    });
 	        
 	}
 	
@@ -223,8 +570,8 @@ public class Ventana extends JFrame implements ActionListener{
 		int margenY = 200;
 		int margenX = 150;
 		
-		int x = 340 + (contPP%4)*margenX;
-		int y = 200 + (contPP/4)*margenY;
+		int x = (contPP%4)*margenX;
+		int y = (contPP/4)*margenY;
 		
 		int w = 125; //width - anchura del boton
 		int h = 75; //height - altura del boton
@@ -232,10 +579,10 @@ public class Ventana extends JFrame implements ActionListener{
 		JButton botonProducto = new JButton();
 		ImageIcon iconoProducto = new ImageIcon(p.getRutaImagen());		
 		botonProducto.setIcon(iconoProducto);
-		add(botonProducto);
+		jpPrincipal.add(botonProducto);
 		
 		JLabel etiqueta = new JLabel(p.getNombre());
-		add(etiqueta); // System.out.println(x + " - " + y);
+		jpPrincipal.add(etiqueta); // System.out.println(x + " - " + y);
 			
 		botonProducto.setBounds(x,y,w,h);
 		etiqueta.setBounds(x,(y+h),w,25);

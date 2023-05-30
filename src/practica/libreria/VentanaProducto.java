@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -30,13 +31,15 @@ public class VentanaProducto extends JFrame implements ActionListener{
 		
 		//Componentes
 		JTextArea pDescripcion = new JTextArea(p.getDescripcion());
-		JLabel pImagen = new JLabel();
-		JButton pComprar = new JButton("Comprar");
+		JButton pComprar = new JButton("Comprar 1 por "+p.getPrecioUnidad());
 		JComboBox<Integer> pUnidades = new JComboBox<Integer>();
+		JLabel pImagen = new JLabel();
+		
 		
 		add(pDescripcion);
 		add(pComprar);
 		add(pUnidades);
+		add(pImagen);
 		
 		//JComboBox
 		for (Integer i = 0; i<p.getStock(); i++) {
@@ -48,7 +51,7 @@ public class VentanaProducto extends JFrame implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				pComprar.setText("Comprar "+pUnidades.getSelectedItem());
+				pComprar.setText("Comprar "+pUnidades.getSelectedItem()+" por "+((Double)p.getPrecioUnidad()*(Integer)pUnidades.getSelectedItem())+"€");
 				
 			}
 		});
@@ -60,16 +63,23 @@ public class VentanaProducto extends JFrame implements ActionListener{
 
 				Integer unidadesSeleccionadas = (int) pUnidades.getSelectedItem();
 				
-				for (int i = 0; i < unidadesSeleccionadas; i++) {
-
-					Cliente.c.getCesta().add(p);
-					p.setStock(p.getStock()-1);
+				if (Cliente.c!=null) {
+					
+					for (int i = 0; i < unidadesSeleccionadas; i++) {
+	
+						Cliente.c.getCesta().add(p);
+						p.setStock(p.getStock()-1);
+						
+					}
+					
+					dispose();
+					JOptionPane.showMessageDialog(null, "Gracias por su compra. Su pedido se encuentra ahora en su cesta");
+					
+				} else {
+					
+					JOptionPane.showMessageDialog(null, "ERROR. Necesitas iniciar sesión antes de comprar productos", "No se ha iniciado sesion", JOptionPane.ERROR_MESSAGE);
 					
 				}
-				
-				dispose();
-				JOptionPane.showMessageDialog(null, "Gracias por su compra. Su pedido se encuentra ahora en su cesta");
-			
 			}
 		});
 		//JTextArea config
@@ -78,11 +88,16 @@ public class VentanaProducto extends JFrame implements ActionListener{
 		pDescripcion.setWrapStyleWord(true);
 		pDescripcion.setEditable(false);
 		
+		//Imagen
+		ImageIcon iconoProducto = Producto.aplicarImagen(p.getRutaImagen(), 300, 175);
+		pImagen.setIcon(iconoProducto);
+		
 		//Coordenadas (640x360. 300x para la foto)
-		pUnidades.setBounds(270,180,100,25);
-		pComprar.setBounds(375,175,125,35);
+		pUnidades.setBounds(200,180,70,25);
+		pComprar.setBounds(270,180,200,25);
 		pDescripcion.setBounds(20,210,600,100);
-
+		pImagen.setBounds(170,0,300,175);
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);

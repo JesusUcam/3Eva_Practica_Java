@@ -5,17 +5,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class VentanaCesta extends JFrame implements ActionListener {
+public class VentanaCesta extends JFrame {
 
 	private int contPP = 0;
 	private double total = 0;
@@ -60,7 +58,7 @@ public class VentanaCesta extends JFrame implements ActionListener {
 		comprar.setFont(new Font("Arial", Font.BOLD, 16));
 		add(comprar);
 
-		comprar.setBounds(450, 240, 150, 50);
+		comprar.setBounds(425, 240, 150, 50);
 
 		pintarProductosCesta();
 
@@ -100,7 +98,7 @@ public class VentanaCesta extends JFrame implements ActionListener {
 
 		for (Producto cesta : Cliente.c.getCesta()) {
 
-			JButton jbProducto = crearProductosCesta(cesta);
+			crearProductosCesta(cesta);
 			total += cesta.getPrecioUnidad();
 
 		}
@@ -108,12 +106,12 @@ public class VentanaCesta extends JFrame implements ActionListener {
 		jpScroll.setPreferredSize(new Dimension(0, contPP * 25));
 		JLabel jlTotal = new JLabel(String.format("Precio total: %.2f", total) + "€");
 		add(jlTotal);
-		jlTotal.setBounds(460, 200, 150, 30);
+		jlTotal.setBounds(435, 200, 200, 30);
 		jlTotal.setFont(new Font("Arial", Font.BOLD, 16));
 
 	}
 
-	public JButton crearProductosCesta(Producto p) {
+	public void crearProductosCesta(Producto p) {
 
 		/*
 		 * 640x360
@@ -161,12 +159,6 @@ public class VentanaCesta extends JFrame implements ActionListener {
 			}
 
 		});
-
-		return jbProducto; // No necesario
-
-	}
-
-	public void actionPerformed(ActionEvent arg0) {
 
 	}
 

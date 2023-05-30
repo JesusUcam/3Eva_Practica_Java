@@ -13,11 +13,11 @@ public class Principal {
 		//Hemos puesto los codigos de los productos como un sólo número para simplificarlo.
 		
 		//BOLIGRAFOS: codigo, nombre, descripcion, precioUnidad, stock, puntaFina, color
-		Boligrafo boligrafo1 = new Boligrafo("1", "BicAzul", 
+		Boligrafo boligrafo1 = new Boligrafo("1", "Bic Azul", 
 				"Un ícono de confiabilidad y estilo. Su diseño atemporal se desliza suavemente, dejando trazos legibles y duraderos. Perfecto para notas, escritura a mano y plasmar ideas con confianza. ¡Elige calidad y simplicidad con el bolígrafo Bic azul clásico!", 
 				0.25, 30, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\BicAzul.png",
 				0.5, "azul");
-		Boligrafo boligrafo2 = new Boligrafo("2", "BicRojo", 
+		Boligrafo boligrafo2 = new Boligrafo("2", "Bic Rojo", 
 				"Un ícono de confiabilidad y estilo. Su diseño atemporal se desliza suavemente, dejando trazos legibles y duraderos. Perfecto para notas, escritura a mano y plasmar ideas con confianza. ¡Elige calidad y simplicidad con el bolígrafo Bic rojo clásico!", 
 				0.25, 4, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\BicRojo.png",
 				0.5, "rojo");
@@ -33,30 +33,30 @@ public class Principal {
 		
 		//CARPETAS: codigo, nombre, descripcion, precioUnidad, stock, conSeparadores
 		Carpeta carpeta1 = new Carpeta("4", "Carpeta Verde", 
-				"Carpeta grande low cost", 
+				"La carpeta verde sencilla es una joya de la simplicidad y practicidad. Su diseño minimalista y elegante te brinda un lienzo en blanco para organizar tus documentos de manera impecable. Con su durabilidad y funcionalidad, te acompañará en todas tus aventuras y proyectos. ¡Descubre la belleza en la sencillez con esta increíble carpeta verde!", 
 				1, 7, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\CarpetaVerde.png",
 				false);
 		Producto.getListaProductos().add(carpeta1);
 
 		//ESTUCHE: codigo, nombre, descripcion, precioUnidad, stock, tipo, numDeColores
 		Estuche estuche1 = new Estuche("5", "Estuche", 
-				"Estuche low cost", 
+				"El estuche económico y de precio accesible es una solución práctica y funcional para guardar tus objetos escolares. Aunque su precio es bajo, cumple su propósito básico de mantener tus útiles organizados y protegidos. Una opción económica para aquellos que buscan una solución sencilla y asequible.", 
 				1, 20, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\Estuche.png", 
 				"pequeño", 1);
 		Estuche estuche2 = new Estuche("6", "Estuche pro", 
-				"Estuche de alta calidad para profesionales", 
-				89.99, 0, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\EstuchePro.png", 
+				"El estuche Gucci de máxima calidad es un símbolo de lujo y estilo. Confeccionado con materiales de primera calidad, ofrece durabilidad y elegancia en cada detalle. Perfecto para guardar tus pertenencias con estilo y distinción.\n¡¡¡SOLO PARA PROFESIONALES!!!", 
+				89.99, 3, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\EstuchePro.png", 
 				"pro", 5);
 		Producto.getListaProductos().add(estuche1);
 		Producto.getListaProductos().add(estuche2);
 		
 		//LIBRO: codigo, nombre, descripcion, precioUnidad, stock, editorial, tematica
 		Libro libro1 = new Libro("7", "Matematicas 2º ESO", 
-				"Para alumnos de 2º de la ESO", 
+				"El libro de matemáticas de 2º de la ESO es una herramienta educativa esencial. Con contenido exhaustivo y didáctico, brinda conocimientos fundamentales en matemáticas. Ideal para fortalecer habilidades numéricas y resolver problemas de forma efectiva.", 
 				9.99, 16, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\LibroMatematicas.png", 
 				"Santillana", "Educativo");
 		Libro libro2 = new Libro("8", "500 Chistes", 
-				"Recopilacion con los mejores chistes en español", 
+				"El libro recopilatorio de chistes es una fuente de risas y entretenimiento sin fin. Reúne una variedad de chistes ingeniosos y divertidos que te harán reír a carcajadas. Perfecto para alegrar cualquier momento y compartir risas con amigos y familiares.", 
 				7.99, 2, "E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\LibroChistes.png", 
 				"A", "Humor");
 		Producto.getListaProductos().add(libro1);

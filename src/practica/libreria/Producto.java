@@ -87,85 +87,10 @@ public class Producto {
 	}
 	
 	//Metodos
-	public static void lectorProductos() {
-		
-		for (Producto producto : listaProductos) {
-			
-			System.out.println(producto.toString());
-			
-		}
-		
-	}
 	
-	public static Producto buscadorProductos(String codigoP) {
+	public static ImageIcon aplicarImagen(String ruta, int x, int y) {
 		
-		Producto p = null;
-		
-		for (Producto producto : Producto.getListaProductos()) {
-			
-			if (producto.codigo.equalsIgnoreCase(codigoP)){
-				
-				p = producto;
-				
-			}
-			
-			System.out.println(producto.codigo);
-		}
-		
-		return p;
-		
-	}
-	
-	public static void comprarProductos(Cliente c) {
-
-		System.out.println("Introduzca el código del producto que desea comprar. Cuando desee dejar de comprar escriba \"0\""); //Falta que tenga en cuenta el stock
-		String codProducto = "";
-		
-		while(!codProducto.equals("0")) {
-
-			Producto p = null;
-			
-			codProducto = Principal.stringScaner();
-		
-			for (Producto producto : listaProductos) {
-			
-				if (producto.getCodigo().equals(codProducto)) {
-				
-					p = producto;
-				
-				}
-			
-			}
-			
-			if (p==null) {
-				
-				System.out.println("Producto no encontrado... pruebe con otro");
-				
-			} else {
-				
-				if(p.stock>0) {
-				
-					c.getCesta().add(p); 
-					
-					p.setStock(p.stock-1);
-					
-					System.out.println("Producto agregado al carrito");
-				
-				} else {
-					
-					System.out.println("Producto agotado.");
-					
-				}
-				
-			}
-		
-		}
-		
-	}
-	
-	public static ImageIcon aplicarImagen(Producto p, int x, int y) {
-		
-		ImageIcon imagenProducto = new ImageIcon(p.rutaImagen);
+		ImageIcon imagenProducto = new ImageIcon(ruta);
 		Image imagen = imagenProducto.getImage();
 		Image nuevaImagen = imagen.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 		ImageIcon imagenFinal = new ImageIcon(nuevaImagen);

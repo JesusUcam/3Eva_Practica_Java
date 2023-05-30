@@ -24,11 +24,10 @@ import javax.swing.JTextField;
 //DUDAS REVISION: 
 	//1 - en pintarProductosCesta() de VentanaCesta, cuando total==0, como evito que salga la ventana de la cesta?
 
-public class Ventana extends JFrame implements ActionListener{
+public class Ventana extends JFrame {
 	
 	private JPanel jpPrincipal, jpMenu;
 	private JScrollPane jsp;
-	private String text;
 	private int contPP = 0;
 
 	private static JButton iniciarSesion, cerrarSesion, agregarCesta;
@@ -90,14 +89,14 @@ public class Ventana extends JFrame implements ActionListener{
 		//Coordenadas
 		iniciarSesion.setBounds(1120, 20, 130, 30);
 		cerrarSesion.setBounds(1120, 20, 130, 30);
-		agregarCesta.setBounds(1120, 50, 130, 30);
+		agregarCesta.setBounds(1120, 51, 130, 50);
 		
 		//ActionListener
 		iniciarSesion.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-				Cliente.iniciarSesion();
+				VentanaInicioSesion vIS = new VentanaInicioSesion();
 				
 			}
 		
@@ -167,9 +166,10 @@ public class Ventana extends JFrame implements ActionListener{
 
 		JTextField busqueda = new JTextField();
 		busqueda.setBounds(420, 20, 450, 45);
-		text = busqueda.getText();
+		String text = busqueda.getText();
 
 		JButton buscador = new JButton();
+		buscador.setIcon(Producto.aplicarImagen("E:\\Programacion\\Eclipse\\Practica3\\src\\practica\\libreria\\Imagenes\\lupa.png", 44, 44));
 		buscador.setBounds(868, 20, 44, 44);
 		buscador.addActionListener(new ActionListener() {
 
@@ -550,7 +550,7 @@ public class Ventana extends JFrame implements ActionListener{
 		int h = 75; //height - altura del boton
 		
 		JButton botonProducto = new JButton();
-		ImageIcon iconoProducto = Producto.aplicarImagen(p, 125, 75);
+		ImageIcon iconoProducto = Producto.aplicarImagen(p.getRutaImagen(), 125, 75);
 		botonProducto.setIcon(iconoProducto);
 		jpPrincipal.add(botonProducto);
 		

@@ -113,13 +113,9 @@ public class VentanaCesta extends JFrame {
 
 	public void crearProductosCesta(Producto p) {
 
-		/*
-		 * 640x360
-		 */
-
 		int y = 0 + (25 * contPP);
 
-		JButton jbProducto = new JButton(p.getNombre());
+		JButton jbProducto = new JButton(p.getNombre()+" - "+p.getPrecioUnidad()+"€");
 		JButton jbEliminar = new JButton("Eliminar");
 		jpScroll.add(jbProducto);
 		jpScroll.add(jbEliminar);

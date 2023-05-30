@@ -27,6 +27,12 @@ public class Estuche extends Producto {
 		this.numDeColores = numDeColores;
 		
 	}
+	public Estuche(String codigo, String nombre, String descripcion, double precio_unidad, int stock, String rutaImagen,
+			String tipo, int numDeColores) {
+		super(codigo, nombre, descripcion, precio_unidad, stock, rutaImagen);
+		this.tipo = tipo;
+		this.numDeColores = numDeColores;
+	}
 	@Override
 	public String toString() {
 		return "ESTUCHE [" + super.toString() + " | Tipo: " + tipo + " | Colores: " + numDeColores + "]"; 

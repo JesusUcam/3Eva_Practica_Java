@@ -10,24 +10,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class VentanaProducto extends JFrame implements ActionListener{
 
 	private JPanel panelVP;
+	private JLabel imagenP;
 	
 	public VentanaProducto(Producto p) {
 		
 		setName(p.getNombre());
 		
 		panelVP = new JPanel();		
-		panelVP.setBackground(new Color(210, 210, 255));
+		panelVP.setBackground(Principal.colorFondo);
 		add(panelVP);
 		setContentPane(panelVP);
 		setLayout(null);
 		setSize(640, 360);
 		
 		//Componentes
-		JLabel pDescripcion = new JLabel(p.getDescripcion());
+		JTextArea pDescripcion = new JTextArea(p.getDescripcion());
 		JLabel pImagen = new JLabel();
 		JButton pComprar = new JButton("Comprar");
 		JComboBox<Integer> pUnidades = new JComboBox<Integer>();
@@ -70,11 +72,16 @@ public class VentanaProducto extends JFrame implements ActionListener{
 			
 			}
 		});
+		//JTextArea config
+		pDescripcion.setBackground(Principal.colorFondo);
+		pDescripcion.setLineWrap(true);
+		pDescripcion.setWrapStyleWord(true);
+		pDescripcion.setEditable(false);
 		
 		//Coordenadas (640x360. 300x para la foto)
 		pUnidades.setBounds(270,180,100,25);
 		pComprar.setBounds(375,175,125,35);
-		pDescripcion.setBounds(30,210,300,25);
+		pDescripcion.setBounds(20,210,600,100);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

@@ -20,12 +20,20 @@ public class Boligrafo extends Producto {
 	}
 
 	//Constructores
-	public Boligrafo(String codigo, String nombre, String descripcion, double precio_unidad, int stock, double puntaFina,
-			String color) {
+	public Boligrafo(String codigo, String nombre, String descripcion, double precio_unidad, int stock,
+			String rutaImagen, double puntaFina, String color) {
+		super(codigo, nombre, descripcion, precio_unidad, stock, rutaImagen);
+		this.puntaFina = puntaFina;
+		this.color = color;
+	}
+
+	public Boligrafo(String codigo, String nombre, String descripcion, double precio_unidad, int stock,
+			double puntaFina, String color) {
 		super(codigo, nombre, descripcion, precio_unidad, stock);
 		this.puntaFina = puntaFina;
 		this.color = color;
 	}
+	
 	@Override
 	public String toString() {
 		return "BOLIGRAFO [" + super.toString() + " | Punta: " + puntaFina + " | Color: " + color + "]"; 

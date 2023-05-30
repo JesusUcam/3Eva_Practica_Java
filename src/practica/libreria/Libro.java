@@ -26,6 +26,12 @@ public class Libro extends Producto {
 		this.editorial = editorial;
 		this.tematica = tematica;
 	}
+	public Libro(String codigo, String nombre, String descripcion, double precio_unidad, int stock, String rutaImagen,
+			String editorial, String tematica) {
+		super(codigo, nombre, descripcion, precio_unidad, stock, rutaImagen);
+		this.editorial = editorial;
+		this.tematica = tematica;
+	}
 	@Override
 	public String toString() {
 		return "LIBRO [" + super.toString() + " | Editorial: " + editorial + " | Tematica: " + tematica + "]";

@@ -40,24 +40,14 @@ public class Ventana extends JFrame implements ActionListener{
 		setSize(1280, 720);
 		setResizable(false);
 		
-		Color colorFondo = new Color(230, 230, 250);
-		
 		//Paneles
 		jpPrincipal = new JPanel();
-		jpPrincipal.setPreferredSize(new Dimension(620,420)); //Lo que va a ocupar el panel realmente
 		//jpPrincipal.setBounds(340, 180, 640, 540);
 		jpMenu = new JPanel();
 		jpMenu.setBounds(0,180,320,790);
 		
 		add(jpPrincipal);
 		add(jpMenu);
-		
-		//JScrollPane
-		jsp = new JScrollPane(jpPrincipal);
-		
-		jsp.setBounds(340, 180, 640, 440); //El espacio que ocupa el panel dentro del frame
-		
-		add(jsp);
 		
 		setLayout(null);
 		jpPrincipal.setLayout(null);
@@ -150,10 +140,18 @@ public class Ventana extends JFrame implements ActionListener{
 			
 		});
 		
-		jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180)); //Lo que va a ocupar el panel realmente
-		jpPrincipal.setBackground(colorFondo);
-		jpMenu.setBackground(colorFondo);
-		getContentPane().setBackground(colorFondo);
+
+		//JScrollPane
+		jsp = new JScrollPane(jpPrincipal);
+		
+		jsp.setBounds(340, 180, 640, 440); //El espacio que ocupa el panel dentro del frame
+		
+		add(jsp);
+		
+		jpPrincipal.setPreferredSize(new Dimension(620,Producto.getListaProductos().size()/4*180)); //Lo que va a ocupar el panel realmente
+		jpPrincipal.setBackground(Principal.colorFondo);
+		jpMenu.setBackground(Principal.colorFondo);
+		getContentPane().setBackground(Principal.colorFondo);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -161,93 +159,53 @@ public class Ventana extends JFrame implements ActionListener{
 		
 	}
 	
-	public JLabel crearJLabelMouseListener(String texto, int y) {
-	    	
-		JLabel jl = new JLabel(texto);
-	    jpMenu.add(jl);
-	    Font fuente = new Font("Arial", Font.PLAIN, 18);
-	    jl.setFont(fuente);
-	    jl.setForeground(Color.BLUE);
-	    
-	    Dimension dimensiones = jl.getPreferredSize();
-	    int ancho = dimensiones.width;
-	    int alto = dimensiones.height;
-	    jl.setBounds(20, y, ancho, alto);
-	    
-	    jl.addMouseListener(new MouseListener() {
-	    	
-	    	public void mouseReleased(MouseEvent e) {}
-	    	public void mousePressed(MouseEvent e) {}
-	    	public void mouseExited(MouseEvent e) {
-	    	
-	    		jl.setForeground(Color.BLUE);
-	            
-	            }
-	            
-	    	public void mouseEntered(MouseEvent e) {
-	        
-	        	jl.setForeground(new Color(128, 0, 255));
-	        
-	        }
-	        public void mouseClicked(MouseEvent e) {
-	        
-	        	for (Producto producto : Producto.getListaProductos()) {
-	        		
-	        		crearJButtonProductos(producto);
-	                
-	            }
-	        }
-	    });
-	        
-	    return jl;
-	        
-	}
-	
 	public void encabezado() {
-		
-		JLabel lTexto = new JLabel("Librería Aljesus");
-		lTexto.setFont(new Font("Old English Text MT", Font.BOLD, 40));
+
+		JLabel lTexto = new JLabel("Libreria Jesulandro");
+		lTexto.setFont(new Font("Old English Text MT", Font.BOLD, 34));
 		lTexto.setBounds(100, 20, 450, 45);
-		
+
 		JTextField busqueda = new JTextField();
 		busqueda.setBounds(420, 20, 450, 45);
 		text = busqueda.getText();
-		
-		
+
 		JButton buscador = new JButton();
-		buscador.setBounds(868,20,44,44);
-		buscador.addActionListener(new ActionListener(){
+		buscador.setBounds(868, 20, 44, 44);
+		buscador.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				String text = buscador.getText().toLowerCase();
+
+				String text = busqueda.getText().toLowerCase();
+				boolean productosEncontrados = false;
+
+				contPP = 0;
+				jpPrincipal.removeAll();
 				
 				for (Producto p : Producto.getListaProductos()) {
 					
-					if(!p.getNombre().toLowerCase().startsWith(text)) {
+					if (p.getNombre().toLowerCase().contains(text)) {
 						
-						System.out.println("No existe ese elemento");					
-							
-						
-					}else {
-						Producto.getListaProductos().add(p);
-						System.out.println("Nombre: "+p.getNombre());
+						productosEncontrados = true;
+
+						crearJButtonProductos(p);
+
 					}
-					
-					
 				}
-					
-			}
 				
-			
+				jpPrincipal.repaint();
+				if (contPP == 0) {
+					JOptionPane.showMessageDialog(null, "Sin coincidencias", "Error", JOptionPane.ERROR_MESSAGE);
+				
+				}
+			}
+
 		});
-		
-		
+
 		add(lTexto);
 		add(buscador);
 		add(busqueda);
-		
+
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -306,7 +264,6 @@ public class Ventana extends JFrame implements ActionListener{
 	        	}
 	        	
 	        	jpPrincipal.repaint();
-	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -357,7 +314,6 @@ public class Ventana extends JFrame implements ActionListener{
 	        	}
 	        	
 	        	jpPrincipal.repaint();
-	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180)); //Lo que va a ocupar el panel realmente
 	        	
 	        }
 	    });
@@ -407,7 +363,6 @@ public class Ventana extends JFrame implements ActionListener{
 	            }
 	        	
 	        	jpPrincipal.repaint();
-	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -457,7 +412,6 @@ public class Ventana extends JFrame implements ActionListener{
 	            }
 	        	
 	        	jpPrincipal.repaint();
-	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -507,7 +461,6 @@ public class Ventana extends JFrame implements ActionListener{
 	            }
 	        	
 	        	jpPrincipal.repaint();
-	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -558,7 +511,6 @@ public class Ventana extends JFrame implements ActionListener{
 	        	}
 	        	
 	        	jpPrincipal.repaint();
-	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -591,14 +543,14 @@ public class Ventana extends JFrame implements ActionListener{
 		int margenY = 200;
 		int margenX = 150;
 		
-		int x = (contPP%4)*margenX;
+		int x = 20+(contPP%4)*margenX;
 		int y = (contPP/4)*margenY;
 		
 		int w = 125; //width - anchura del boton
 		int h = 75; //height - altura del boton
 		
 		JButton botonProducto = new JButton();
-		ImageIcon iconoProducto = new ImageIcon(p.getRutaImagen());		
+		ImageIcon iconoProducto = Producto.aplicarImagen(p, 125, 75);
 		botonProducto.setIcon(iconoProducto);
 		jpPrincipal.add(botonProducto);
 		
@@ -619,14 +571,6 @@ public class Ventana extends JFrame implements ActionListener{
 			}
 			
 		});
-		
-	}
-
-	public static void main(String[] args) { //En el futuro se usará la del principal
-		
-		Principal.insertarDatos();
-		
-		Ventana v = new Ventana();
 		
 	}
 	

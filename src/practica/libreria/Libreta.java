@@ -34,6 +34,13 @@ public class Libreta extends Producto {
 		this.tamanyo = tamaño;
 		this.color = color;
 	}
+	public Libreta(String codigo, String nombre, String descripcion, double precio_unidad, int stock, String rutaImagen,
+			int numHojas, double tamanyo, String color) {
+		super(codigo, nombre, descripcion, precio_unidad, stock, rutaImagen);
+		this.numHojas = numHojas;
+		this.tamanyo = tamanyo;
+		this.color = color;
+	}
 	@Override
 	public String toString() {
 		return "LIBRETA [" + super.toString() + " | Numero de Hojas: " + numHojas + " | Tamaño: " + tamanyo + " | Color: " + color + "]";

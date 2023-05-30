@@ -21,6 +21,12 @@ public class Carpeta extends Producto {
 		this.conSeparadores = conSeparadores;
 	}
 
+	public Carpeta(String codigo, String nombre, String descripcion, double precio_unidad, int stock, String rutaImagen,
+			boolean conSeparadores) {
+		super(codigo, nombre, descripcion, precio_unidad, stock, rutaImagen);
+		this.conSeparadores = conSeparadores;
+	}
+
 	@Override
 	public String toString() {
 		

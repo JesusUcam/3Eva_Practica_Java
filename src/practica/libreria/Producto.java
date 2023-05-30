@@ -1,6 +1,9 @@
 package practica.libreria;
 
+import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 
 public class Producto {
 	
@@ -157,6 +160,17 @@ public class Producto {
 			}
 		
 		}
+		
+	}
+	
+	public static ImageIcon aplicarImagen(Producto p, int x, int y) {
+		
+		ImageIcon imagenProducto = new ImageIcon(p.rutaImagen);
+		Image imagen = imagenProducto.getImage();
+		Image nuevaImagen = imagen.getScaledInstance(x, y, Image.SCALE_DEFAULT);
+		ImageIcon imagenFinal = new ImageIcon(nuevaImagen);
+		
+		return imagenFinal;
 		
 	}
 	

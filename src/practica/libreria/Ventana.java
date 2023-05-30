@@ -40,9 +40,10 @@ public class Ventana extends JFrame implements ActionListener{
 		setSize(1280, 720);
 		setResizable(false);
 		
+		Color colorFondo = new Color(230, 230, 250);
+		
 		//Paneles
 		jpPrincipal = new JPanel();
-		jpPrincipal.setBackground(new Color(230, 230, 250));
 		jpPrincipal.setPreferredSize(new Dimension(620,420)); //Lo que va a ocupar el panel realmente
 		//jpPrincipal.setBounds(340, 180, 640, 540);
 		jpMenu = new JPanel();
@@ -150,7 +151,10 @@ public class Ventana extends JFrame implements ActionListener{
 		});
 		
 		jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180)); //Lo que va a ocupar el panel realmente
-
+		jpPrincipal.setBackground(colorFondo);
+		jpMenu.setBackground(colorFondo);
+		getContentPane().setBackground(colorFondo);
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -298,7 +302,12 @@ public class Ventana extends JFrame implements ActionListener{
 	        			crearJButtonProductos(producto);
 	                
 	        		}
-	            }
+	            
+	        	}
+	        	
+	        	jpPrincipal.repaint();
+	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
+	        	
 	        }
 	    });
 	        
@@ -344,7 +353,12 @@ public class Ventana extends JFrame implements ActionListener{
 	        			crearJButtonProductos(producto);
 	                
 	        		}
-	            }
+	            
+	        	}
+	        	
+	        	jpPrincipal.repaint();
+	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180)); //Lo que va a ocupar el panel realmente
+	        	
 	        }
 	    });
 	        
@@ -393,6 +407,7 @@ public class Ventana extends JFrame implements ActionListener{
 	            }
 	        	
 	        	jpPrincipal.repaint();
+	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -442,6 +457,7 @@ public class Ventana extends JFrame implements ActionListener{
 	            }
 	        	
 	        	jpPrincipal.repaint();
+	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -491,6 +507,7 @@ public class Ventana extends JFrame implements ActionListener{
 	            }
 	        	
 	        	jpPrincipal.repaint();
+	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
@@ -537,7 +554,11 @@ public class Ventana extends JFrame implements ActionListener{
 	        			crearJButtonProductos(producto);
 	                
 	        		}
-	            }
+	            
+	        	}
+	        	
+	        	jpPrincipal.repaint();
+	        	jpPrincipal.setPreferredSize(new Dimension(620,contPP/4*180));
 	        	
 	        }
 	    });
